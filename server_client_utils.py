@@ -1,7 +1,7 @@
 import sys
 
 def error(info, exit = True, code = -1):
-    """Base fatal error handling, prints info, exit if @param exit, returning @param code"""
+    """Base fatal error handling, prints info, exit if @param exit, returning @param code."""
     print(info)
     if exit:
         sys.exit(code)
