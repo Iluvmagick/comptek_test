@@ -4,8 +4,12 @@ import server_client_utils as utils
 
 class RequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
-        self.path = "/www" + self.path
-        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+        self.path = "/www" + self.path 
+        try:
+            code = int(self.headers.getheader("X-Return-Code"))
+            self.send_error(code, "X-Return-Code Matched!")
+        except:
+            SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
 def run_server(address):
     """Launches BaseHTTPServer on the address specified by function parameter."""
