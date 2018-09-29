@@ -3,7 +3,7 @@ import server_client_utils as utils
 
 def main():
     address = utils.address_handling()
-    response = urllib2.urlopen("http://127.0.0.1:8080")
+    response = urllib2.urlopen("http://127.0.0.1:8080/test_dir/")
     html = response.read()
     print(html)
 

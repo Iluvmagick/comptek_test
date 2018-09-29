@@ -1,11 +1,16 @@
-import BaseHTTPServer
+import BaseHTTPServer, SimpleHTTPServer
 import sys
 import server_client_utils as utils
+
+class RequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.path = "/www" + self.path
+        SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
 def run_server(address):
     """Launches BaseHTTPServer on the address specified by function parameter."""
     try:
-        httpd = BaseHTTPServer.HTTPServer(address, BaseHTTPServer.BaseHTTPRequestHandler)
+        httpd = BaseHTTPServer.HTTPServer(address, RequestHandler)
     except:
         utils.error("Failed to launch server")
     
