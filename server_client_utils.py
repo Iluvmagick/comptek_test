@@ -9,7 +9,7 @@ def error(info, exit = True, code = -1):
 def address_handling():
     """Does read the address from command line arguments, returns it, defaults to DEFAULT_ADRESS, defined inside."""
 
-    DEFAULT_ADRESS = "127.0.0.1:8080"
+    DEFAULT_ADRESS = "0.0.0.0:8080"
 
     try:
         address = sys.argv[1]
