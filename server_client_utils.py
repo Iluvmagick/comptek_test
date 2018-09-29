@@ -9,12 +9,11 @@ def error(info, exit = True, code = -1):
 def address_handling():
     """Does read the address from command line arguments, returns it, defaults to DEFAULT_ADRESS, defined inside."""
 
-    DEFAULT_ADRESS = "0.0.0.0:8080"
+    DEFAULT_ADRESS = "127.0.0.1:8080"
 
     try:
         address = sys.argv[1]
     except:
-        print("Could not parse, or no address, launching with default server address {}".format(DEFAULT_ADRESS))
         address = DEFAULT_ADRESS
 
     try:
@@ -23,6 +22,6 @@ def address_handling():
     except:
         error("Can't parse address")
     finally:
-        print("Launching server on address {}:{}".format(address[0], address[1]))
+        print("Launching with address {}:{}".format(address[0], address[1]))
 
     return address
