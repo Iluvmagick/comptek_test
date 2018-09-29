@@ -1,6 +1,7 @@
 import urllib2, httplib
 import server_client_utils as utils
 import random
+import ssl
 
 def connect(url, code = None):
     """Does a single connection to @param url, if @param code is availible, also sends X-Return-Code header."""
@@ -8,6 +9,10 @@ def connect(url, code = None):
         request = urllib2.Request(url)
         if code != None:
             request.add_header('X-Return-Code', code)
+
+        context = ssl.create_default_context(capath = './')
+        context.check_hostname = True
+        context.verify_mode = ssl.CERT_REQUIRED
 
         response = urllib2.urlopen(request)
     
@@ -18,8 +23,8 @@ def connect(url, code = None):
         print(err)
     except httplib.BadStatusLine as err:
         print("Bad status code")
-    except:
-        utils.error("Failed, terminating")
+    #except:
+    #    utils.error("Failed, terminating")
 
 def main():
     random.seed()    

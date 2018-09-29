@@ -1,6 +1,7 @@
 import BaseHTTPServer, SimpleHTTPServer
 import sys
 import server_client_utils as utils
+import ssl
 
 class RequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -15,6 +16,7 @@ def run_server(address):
     """Launches BaseHTTPServer on the address specified by function parameter."""
     try:
         httpd = BaseHTTPServer.HTTPServer(address, RequestHandler)
+        httpd.socket = ssl.wrap_socket(httpd.socket, certfile='./server.pem', server_side=True)
     except:
         utils.error("Failed to launch server")
     
