@@ -22,14 +22,15 @@ def connect(url, code = None):
         utils.error("Failed, terminating")
 
 def main():
-    
+    random.seed()    
+
     AMOUNT_OF_CONNECTS = 10
     # should be from 0, to 100, is probability in percents, that an X-Code request would be sent
     PARTS_WITH_XCODE = 25
 
     TEST_URL_LIST = ["http://127.0.0.1:8080",
                      "http://127.0.0.1:8080/test_dir",
-                     "http://127.0.0.1:8080/test_dir/image.jpg",
+                     "http://127.0.0.1:8080/test_dir/text.txt",
                      "http://127.0.0.1:8080/fake_dir",
                      "http://127.0.0.1:8080/fake_file.faker"]
 
@@ -41,5 +42,7 @@ def main():
             code = random.choice(TEST_CODES_LIST)
         connect(random.choice(TEST_URL_LIST), code)
     
+    raw_input("Press anything to exit")
+
 if __name__ == '__main__':
     main()
