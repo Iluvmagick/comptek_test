@@ -1,19 +1,22 @@
-import urllib2, httplib
+import urllib2
+import httplib
 import server_client_utils as utils
 import random
 import ssl
 
-def connect(url, code = None):
-    """Does a single connection to @param url, if @param code is availible, also sends X-Return-Code header."""
+
+def connect(url, code=None):
+    """Does a single connection to @param url,
+       if @param code is availible, also sends X-Return-Code header."""
     try:
         request = urllib2.Request(url)
-        if code != None:
+        if code is not None:
             request.add_header('X-Return-Code', code)
 
-        context = ssl.create_default_context(cafile = "server.crt")
+        context = ssl.create_default_context(cafile="server.crt")
         context.check_hostname = True
 
-        response = urllib2.urlopen(request, context = context)
+        response = urllib2.urlopen(request, context=context)
 
         print("HTTP Response Code {}".format(response.code))
         html = response.read()
@@ -26,14 +29,16 @@ def connect(url, code = None):
         print(err)
     except ssl.CertificateError as err:
         print(err)
-    #except:
-    #    utils.error("Failed, terminating")
+    except Exception:
+        utils.error("Failed, terminating")
+
 
 def main():
-    random.seed()    
+    random.seed()
 
     AMOUNT_OF_CONNECTS = 10
-    # should be from 0, to 100, is probability in percents, that an X-Code request would be sent
+    # should be from 0, to 100, is probability in percents,
+    # that an X-Code request would be sent
     PARTS_WITH_XCODE = 25
 
     TEST_URL_LIST = ["https://127.0.0.1:4443",
@@ -49,8 +54,9 @@ def main():
         if (random.randint(0, 101) < PARTS_WITH_XCODE):
             code = random.choice(TEST_CODES_LIST)
         connect(random.choice(TEST_URL_LIST), code)
-    
+
     raw_input("Press anything to exit")
+
 
 if __name__ == '__main__':
     main()
