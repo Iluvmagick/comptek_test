@@ -14,11 +14,11 @@ class RequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 def run_server(address):
     """Launches BaseHTTPServer on the address specified by function parameter."""
-    try:
-        httpd = BaseHTTPServer.HTTPServer(address, RequestHandler)
-        httpd.socket = ssl.wrap_socket(httpd.socket, certfile='./server.pem', server_side=True)
-    except:
-        utils.error("Failed to launch server")
+    #try:
+    httpd = BaseHTTPServer.HTTPServer(address, RequestHandler)
+    httpd.socket = ssl.wrap_socket(httpd.socket, certfile = './server_fake.pem', server_side = True)
+    #except:
+    #    utils.error("Failed to launch server")
     
     print("Server launched!")
 

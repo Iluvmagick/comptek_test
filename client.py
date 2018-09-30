@@ -10,12 +10,11 @@ def connect(url, code = None):
         if code != None:
             request.add_header('X-Return-Code', code)
 
-        context = ssl.create_default_context(capath = './')
+        context = ssl.create_default_context(cafile = "server.crt")
         context.check_hostname = True
-        context.verify_mode = ssl.CERT_REQUIRED
 
-        response = urllib2.urlopen(request)
-    
+        response = urllib2.urlopen(request, context = context)
+
         print("HTTP Response Code {}".format(response.code))
         html = response.read()
         print(html)
@@ -23,6 +22,10 @@ def connect(url, code = None):
         print(err)
     except httplib.BadStatusLine as err:
         print("Bad status code")
+    except urllib2.URLError as err:
+        print(err)
+    except ssl.CertificateError as err:
+        print(err)
     #except:
     #    utils.error("Failed, terminating")
 
@@ -33,11 +36,11 @@ def main():
     # should be from 0, to 100, is probability in percents, that an X-Code request would be sent
     PARTS_WITH_XCODE = 25
 
-    TEST_URL_LIST = ["http://127.0.0.1:8080",
-                     "http://127.0.0.1:8080/test_dir",
-                     "http://127.0.0.1:8080/test_dir/text.txt",
-                     "http://127.0.0.1:8080/fake_dir",
-                     "http://127.0.0.1:8080/fake_file.faker"]
+    TEST_URL_LIST = ["https://127.0.0.1:4443",
+                     "https://127.0.0.1:4443/test_dir",
+                     "https://127.0.0.1:4443/test_dir/text.txt",
+                     "https://127.0.0.1:4443/fake_dir",
+                     "https://127.0.0.1:4443/fake_file.faker"]
 
     TEST_CODES_LIST = [403, 102, 205, 206, 418]
 

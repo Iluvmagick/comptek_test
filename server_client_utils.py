@@ -4,6 +4,7 @@ def error(info, exit = True, code = -1):
     """Base fatal error handling, prints info, exit if @param exit, returning @param code."""
     print(info)
     if exit:
+        raw_input("Press anything to exit")
         sys.exit(code)
 
 def address_handling():
